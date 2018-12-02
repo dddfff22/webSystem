@@ -1,13 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <router-link to="/mainpage">MainPage</router-link>
-    </div>
-    <router-view/>
+  <div class="main-top">
+  
   </div>
 </template>
+
+
+<script>
+
+export default {
+  name: 'maintop',
+  props: {
+    msg: String
+  }
+}
+
+</script>
+
 
 <style>
 #app {

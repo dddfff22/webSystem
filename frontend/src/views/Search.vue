@@ -1,8 +1,8 @@
 <template>
   <div class="search">
-      <!-- <form>
+      <form>
           <input name="searchValue" v-model="searchValue">
-      </form> -->
+      </form>
       <div id="searchResultList"></div>
       <SearchedItemList v-bind:searchedUserNameList="searchResultwithUserName" v-bind:searchedTagList="searchResultwithHashTag"></SearchedItemList>
   </div>
@@ -16,6 +16,7 @@ export default {
   name: 'search',
   components: {
     SearchedItemList
+    
   },
   data() {
       return {
@@ -23,10 +24,6 @@ export default {
           searchResultwithUserName: Array,
           searchResultwithHashTag: Array
       }
-  },
-  created() {
-      this.searchWithUserName();
-      this.searchWithHashTag();
   },
   methods: {
       searchWithUserName: function() {
@@ -59,3 +56,14 @@ export default {
 //   }
 }
 </script>
+
+
+<style>
+
+
+.search{
+    margin-top: 100px;
+}
+
+
+</style>

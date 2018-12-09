@@ -1,21 +1,18 @@
 <template>
-  <div class="main-page">
-      <main-top/> 
+  <div class="main-page"> 
       <div v-for= "searchResultwithUserId in searchResultwithUserIds">
-      <main-body :id="searchResultwithUserId.userId"  :link="img"/>
+      <main-body :id="searchResultwithUserId.userId"  :link="img" :content="searchResultwithUserId.content"/>
       </div>
   </div>
 </template>
 <script>
 import MainBody from '@/components/MainBody.vue'
-import MainTop from '@/components/MainTop.vue'
 
 export default {
 
   name: 'mainpage',
   components: {
-    MainBody,
-    MainTop
+    MainBody
   },data(){
     return{
       userId : "dddfff22",

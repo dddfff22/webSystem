@@ -24,5 +24,14 @@ router.get("/:userName/posts", function(req, res) {
      });
 });
 
+router.get("/:userName/follow", function(req, res) {
+    console.log(":8000/user/:userName/follow");
+    var userName = req.params.userName;
+
+    postModel.find({"userName": userName}, function(err, posts) {
+        console.log(posts);
+        res.send(posts);
+     });
+});
 
 module.exports = router

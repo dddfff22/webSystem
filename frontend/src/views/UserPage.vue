@@ -1,6 +1,7 @@
 <template>
     <div>
         <div id="userInfo">
+            <button v-on:click="doFollow">Follow</button>
         </div>
         <div id="posts">
         </div>
@@ -17,7 +18,7 @@ export default {
             userPosts: Array
         }
     },
-    mounted() {
+    created() {
         this.getUserInfo();
         this.getUserPosts();
     },
@@ -33,6 +34,15 @@ export default {
 
         getUserPosts: function() {
             console.log("getUserPosts");
+            this.$http.get('http://localhost:8000/user/' + this.userName + '/posts')
+            .then((result) => {
+                this.userPosts = result.data;
+                console.log(this.userPosts);
+            });
+        },
+
+        doFollow: function() {
+            console.log("doFollow");
             this.$http.get('http://localhost:8000/user/' + this.userName + '/posts')
             .then((result) => {
                 this.userPosts = result.data;

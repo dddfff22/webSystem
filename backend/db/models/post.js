@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    userId: String,
     content: String,    //contentSchema
     like: Number,
     hashTag: [String],

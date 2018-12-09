@@ -10,7 +10,7 @@
 
 <script>
 // @ is an alias to /src
-import SearchedItemList from '@/components/SearchedItemList.vue'
+import SearchedItemList from '@/components/searchedItemList.vue'
 
 export default {
   name: 'search',
@@ -24,7 +24,7 @@ export default {
           searchResultwithHashTag: Array
       }
   },
-  method: {
+  methods: {
       searchWithUserName: function() {
           console.log("search");
       this.$http.get('http://localhost:8000/search/' + this.searchValue)

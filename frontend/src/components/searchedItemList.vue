@@ -1,11 +1,15 @@
 <template>
     <div class="searchedItemList">
-        <div v-for="i in searchedUserNameList" v-bind:key="i._id">
+        {{this.logging()}}
+        <div v-for="i in searchedUserIdList" v-bind:key="i._id">
             <br>
+            {{i.userId}} - {{i.description}}
         </div>
         <div v-for="i in searchedTagList" v-bind:key="i._id">
             <br>
+            #{{i.hashTag}}
         </div>
+        <!-- {{this.logging()}} -->
     </div>
 </template>
 
@@ -13,8 +17,31 @@
 export default {
     name: 'SearchedItemList',
     props: {
-        searchedUserNameList: Array,
-        searchedTagList: Array
+        searchedList: Array
+    },
+    data() {
+        return {
+            searchedUserIdList: Array,
+            searchedTagList: Array
+        }
+    },
+    beforeUpdate() {
+        this.getSearchedList();
+    },
+    methods: {
+        getSearchedList: function() {
+            this.searchedUserIdList = this.searchedList[0];
+            this.searchedTagList = this.searchedList[1];
+        },
+
+        logging: function() {
+            console.log("SearchedItemList, searchedList " + this.searchedList);
+            console.log(this.searchedList);
+            console.log("SearchedItemList, searchedUserIdList " + this.searchedUserIdList);
+            console.log(this.searchedUserIdList);
+            console.log("SearchedItemList, searchedTagList " + this.searchedTagList);
+            console.log(this.searchedTagList);
+        }
     }
 }
 </script>

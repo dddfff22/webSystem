@@ -1,10 +1,12 @@
 <template>
   <div class="search">
-      <form>
+      <!-- <form>
           <input name="searchValue" v-model="searchValue">
-      </form>
-      <div id="searchResultList"></div>
-      <SearchedItemList v-bind:searchedUserNameList="searchResultwithUserName" v-bind:searchedTagList="searchResultwithHashTag"></SearchedItemList>
+      </form> -->
+      {{this.searchValue}}
+      <div id="searchedItemList">
+        <SearchedItemList v-bind:searchedList="searchResult"></SearchedItemList>
+      </div>
   </div>
 </template>
 
@@ -13,57 +15,61 @@
 import SearchedItemList from '@/components/SearchedItemList.vue'
 
 export default {
-  name: 'search',
+  name: 'Search',
   components: {
     SearchedItemList
-    
   },
   data() {
       return {
-          searchValue: String,
-          searchResultwithUserName: Array,
-          searchResultwithHashTag: Array
+          searchValue: this.$route.params.searchValue,
+          searchResult: Array,
+        //   searchResultwithUserId: Array,
+        //   searchResultwithHashTag: Array
       }
   },
+  created() {
+      this.search();
+  },
+  watch: {
+      "$route": "search"
+  },
   methods: {
-      searchWithUserName: function() {
+      search: function() {
           console.log("search");
       this.$http.get('http://localhost:8000/search/' + this.searchValue)
     .then((result) => {
-        this.searchResultwithUserName = result.data;
-        console.log(this.searchResultwithUserName);
+        this.searchResult = result.data;
+        // this.searchResultwithUserId = result.data[0];
+        // this.searchResultwithHashTag = result.data[1];
+        console.log(this.searchResult);
+        // console.log(this.searchResultwithUserId);
+        // console.log(this.searchResultwithHashTag);
       });
       },
-  
-      searchWithHashTag: function() {
-          console.log("search");
-      this.$http.get('http://localhost:8000/search/' + this.searchValue)
-    .then((result) => {
-        this.searchResultwithHashTag = result.data;
-        console.log(this.searchResultwithHashTag);
-      });
-      }
-  }
 
-//       search: function() {
-//           console.log("search");
-//       this.$http.get('http://localhost:8000/search/' + this.searchValue)
-//     .then((result) => {
-//         this.searchResult = result.data;
-//         console.log(this.searchResult);
-//       });
-//       }
-//   }
+    //   searchWithUserName: function() {
+    //       console.log("search");
+    //   this.$http.get('http://localhost:8000/search/' + this.searchValue)
+    // .then((result) => {
+    //     this.searchResultwithUserName = result.data;
+    //     console.log(this.searchResultwithUserName);
+    //   });
+    //   },
+  
+    //   searchWithHashTag: function() {
+    //       console.log("search");
+    //   this.$http.get('http://localhost:8000/search/' + this.searchValue)
+    // .then((result) => {
+    //     this.searchResultwithHashTag = result.data;
+    //     console.log(this.searchResultwithHashTag);
+    //   });
+    //   }
+  }
 }
 </script>
 
-
 <style>
-
-
 .search{
     margin-top: 100px;
 }
-
-
 </style>

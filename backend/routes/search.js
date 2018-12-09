@@ -28,7 +28,7 @@ router.get("/:searchValue", function(req, res) {
     // });
     
 
-    res.send();
+    // res.send();
 }); 
 // router.post('/register', (req, res) => {
 //     res.send('Hello World!\n');

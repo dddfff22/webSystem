@@ -24,7 +24,7 @@ export default {
           searchResultwithHashTag: Array
       }
   },
-  method: {
+  methods: {
       searchWithUserName: function() {
           console.log("search");
       this.$http.get('http://localhost:8000/search/' + this.searchValue)

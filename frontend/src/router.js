@@ -19,6 +19,22 @@ export default new Router({
       component: ()=> import('./views/MainPage.vue')
     },
     {
+      path: '/user/:userName',
+      name: 'user',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "post" */ './views/UserPage.vue')
+    },
+    {
+      path: '/search/:searchValue',
+      name: 'search',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "post" */ './views/Search.vue')
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

@@ -3,10 +3,12 @@
   <div class="idbox">
     <h1>{{id}}</h1>
   </div>
-  <div calss="image">
+  <div class="image">
     <img v-bind:src="link" /> 
   </div>
-
+  <div class="content">
+    <h1>{{content}}</h1>
+  </div>
   </div>
 </template>
 
@@ -18,7 +20,9 @@ export default {
   props: {
     msg: String,
     id:String,
-    link:String
+    link:String,
+    content:String,
+    hashTags:[],
   }
 }
 
@@ -33,11 +37,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 100px;
 
 }
 .main-body{
   border:2px solid gray;
+  margin-top:10px
 }
 
 </style>

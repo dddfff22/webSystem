@@ -6,7 +6,7 @@
           <input type="text" name="searchValue" v-model="searchValue">
           <router-link :to="{name: 'search', params: {searchValue: searchValue}}" tag="button">SEARCH</router-link> | 
         </form>
-        <router-link :to="{name: 'user', params: {userName: currentUser}}">MYPAGE</router-link>
+        <router-link :to="{name: 'user', params: {userId: currentUser}}">MYPAGE</router-link>
       </div>
     <div class="body">
       <router-view/>

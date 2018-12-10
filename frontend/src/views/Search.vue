@@ -30,10 +30,17 @@ export default {
   created() {
       this.search();
   },
+//   beforeUpdated() {
+    //   this.search();
+//   },
   watch: {
-      "$route": "search"
+      "$route": "setSearchValue"
   },
   methods: {
+      setSearchValue: function() {
+          this.searchValue = this.$route.params.searchValue;
+          this.search();
+      },
       search: function() {
           console.log("search");
       this.$http.get('http://localhost:8000/search/' + this.searchValue)

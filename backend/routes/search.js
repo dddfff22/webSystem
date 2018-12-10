@@ -10,7 +10,7 @@ router.get("/:searchValue", function(req, res) {
     console.log(searchValue);
     var searchResult = [];
 
-    userModel.find({"userName": {$regex: ".*" + searchValue + ".*", $options: "i"}},function(err, users) {
+    userModel.find({"userId": {$regex: ".*" + searchValue + ".*", $options: "i"}},function(err, users) {
         console.log(users);
         searchResult[0] = users;
 

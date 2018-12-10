@@ -3,6 +3,7 @@
   <div class="idbox">
     <h1>{{id}}</h1>
   </div>
+  <input type="file" id="wizard-picture"  @change="handleSubmit($event)">
   <div class="image">
     <img v-bind:src="link" /> 
   </div>
@@ -23,6 +24,17 @@ export default {
     link:String,
     content:String,
     hashTags:[],
+  },
+  method: {
+    handleSubmit (e) {
+     console.log( 'posts');
+    let data = new FormData()
+    data.append('image', e.target.files[0])
+    this.$http.post('http://localhost:8000/mainpage/upload', data)
+        .then(resp => {
+         this.imagePath = resp.data.path  
+   });
+  }
   }
 }
 

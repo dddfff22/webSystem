@@ -6,6 +6,7 @@ require('./db/mongo') //connect db
 const user = require('./routes/user')
 const search = require('./routes/search')
 const mainpage = require('./routes/mainpage')
+const signUp = require('./routes/signUp')
 
 const app = express()
 app.use((req, res, next) =>{
@@ -20,5 +21,7 @@ app.use(bodyParser.json())
 app.use('/search', search)
 app.use('/user', user)
 app.use('/mainpage',mainpage)
+app.use('/signup',signUp)
+
 
 module.exports = app

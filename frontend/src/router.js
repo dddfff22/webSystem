@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainPage from './views/MainPage.vue'
+import Main from './views/Main.vue'
+import SignUp from './views/SignUp.vue'
 
 Vue.use(Router)
 
@@ -13,6 +15,18 @@ export default new Router({
     //     name: 'login',     //vue routing - the other vue pages in mainpage
     //     component: 
     // },
+    {
+      path: '/usermain',
+      name: 'usermain',
+      component: Main
+      // component: ()=> import('./views/MainPage.vue')
+    },
+    {
+      path: '/signUp',
+      name: 'signUp',
+      component: SignUp
+      // component: ()=> import('./views/MainPage.vue')
+    },
     {
       path: '/mainpage',
       name: 'mainpage',

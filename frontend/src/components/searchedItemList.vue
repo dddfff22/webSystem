@@ -1,13 +1,17 @@
 <template>
     <div class="searchedItemList">
         {{this.logging()}}
-        <div v-for="i in searchedUserIdList" v-bind:key="i._id">
-            <br>
-            {{i.userId}} - {{i.description}}
+        <div>
+            <div v-for="i in searchedUserIdList" v-bind:key="i._id">
+                <br>
+                <router-link :to="{name: 'user', params: {userId: i.userId}}">{{i.userId}} - {{i.userName}}</router-link>
+            </div>
         </div>
-        <div v-for="i in searchedTagList" v-bind:key="i._id">
-            <br>
-            #{{i.hashTag}}
+        <div>
+            <div v-for="i in searchedTagList" v-bind:key="i._id">
+                <br>
+                #{{i.hashTag}}
+            </div>
         </div>
         <!-- {{this.logging()}} -->
     </div>

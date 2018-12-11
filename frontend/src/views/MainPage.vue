@@ -19,7 +19,7 @@ export default {
     MainBody
   },data(){
     return{
-      userId : "dddfff22",
+      userId : "shy625",
       searchResultwithUserIds: [],
       loading:'1',
       img: "/img/logo.82b9c7a5.png",

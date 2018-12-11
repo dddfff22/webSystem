@@ -2,7 +2,6 @@
   <div class="mainpage"> 
       <button>새로운 게시글 추가하기</button>
         <input type="file" id="wizard-picture"  @change="handleSubmit($event)">
-
       <div v-for= "searchResultwithUserId in searchResultwithUserIds">
       <main-body :id="searchResultwithUserId.userId"  :link="img" :content="searchResultwithUserId.content"/>
       </div>
@@ -17,7 +16,8 @@ export default {
   name: 'mainpage',
   components: {
     MainBody
-  },data(){
+  },
+  data(){
     return{
       userId : "shy625",
       searchResultwithUserIds: [],

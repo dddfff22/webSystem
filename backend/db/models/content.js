@@ -1,18 +1,17 @@
 const { mongoose, autoIncrement } = require('../mongo')
 
-const postSchema = new mongoose.Schema({
-    userName: String,
+const contentSchema = new mongoose.Schema({
+  
     postId: {
         type: Date,
         default: Date.now
     },
     userId: String,
-    content: [{imagePath:String,imageContent:String}],    //contentSchema
+    content: [],    //contentSchema
     like: Number,
     hashTag: [String],
     comment: [{userName: String, message: String}]
 })
-
 
 // // doctorId를 Auto Increment 필드로 지정
 // doctorSchema.plugin(autoIncrement, {
@@ -21,4 +20,4 @@ const postSchema = new mongoose.Schema({
 //     startAt: 1
 // })
 
-module.exports = mongoose.model('Post', postSchema)
+module.exports = mongoose.model('Post', contentSchema)

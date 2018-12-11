@@ -5,12 +5,21 @@ const Image = require('../db/models//Image');
 const multer = require('multer')
 const path = require('path')
 const UPLOAD_PATH = path.resolve(__dirname, 'C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles')
-const upload = multer({
-  dest: UPLOAD_PATH,
-  limits: {fileSize: 10000000, files: 5}
-})
-const router = Router()
 
+var storage = multer.diskStorage({
+   destination: function (req, file, cb) {
+       cb(null, UPLOAD_PATH)
+   },
+   limits: {fileSize: 10000000, files: 5},
+   filename: function (req, file, cb) {
+       let ext = ''; // set default extension (if any)
+       if (file.originalname.split(".").length>1) // checking if there is an extension or not.
+           ext = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
+       cb(null, Date.now() + ext)
+   }
+})
+var upload = multer({ storage: storage });
+const router = Router()
 
 router.get("/get/:userId", function(req, res) {
     console.log(req.url);
@@ -22,22 +31,22 @@ router.get("/get/:userId", function(req, res) {
 }); 
 
 
-router.get("/image",function(req,res){
-   res.sendFile("C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles/5ec034737c6962b6ad74638e6d3ba4a6");
-});
+router.get("/image/:imagename",function(req,res){
+   console.log(req);
+   res.sendFile("C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles/"+req.params.imagename);
+});   
 
-router.post("/upload",upload.array('image',5),(req,res)=>{
-   console.log('up');
-   const images = req.files.map((file) => {
-      return {
-        filename: file.filename,
-        originalname: file.originalname
-      }
-    });
-    Image.insertMany(images, (err, result) => {
-      if (err) return res.sendStatus(404)
-      res.json(result)
-    });
+router.post("/upload:objectID",upload.array('image',5),(req,res)=>{
+  var objectID=req.params.objectID;
+  console.log(objectID);
+  
+   postModel.findOne({"_id": objectID}, function(err, post) {
+      console.log("1");
+      post.content.push({imagePath:"http://localhost:8000/mainpage/image/"+req.files[0].filename,imageContent:"dd"});
+   
+      console.log(post);
+      post.save();
+      });
 });
 
 

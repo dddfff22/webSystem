@@ -1,11 +1,15 @@
 const { mongoose, autoIncrement } = require('../mongo')
 
 const userSchema = new mongoose.Schema({
+    userEmail: {
+        type: String,
+        unique: true, 
+    },
     userId: {
         type: String,
         unique: true
     },
-    password: String,
+    // password: String, firebase에서 관리
     userName: String,
     description: String,
     following: [String],

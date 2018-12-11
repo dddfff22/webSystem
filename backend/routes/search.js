@@ -20,7 +20,7 @@ router.get("/:searchValue", function(req, res) {
 
             res.send(searchResult);
         }).select("hashTag");
-    }).select("userId description");
+    }).select("userId userName");
 });
 
 module.exports = router

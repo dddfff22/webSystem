@@ -3,8 +3,8 @@ const userModel = require('../db/models/user');
 const postModel = require('../db/models/post');
 const Image = require('../db/models//Image');
 const multer = require('multer')
-const path = require('path')   
-const UPLOAD_PATH = path.resolve(__dirname, 'C:/Users/dlrld_000/Desktop/웹시설/팀프/webSystem/backend/uploadedFiles')
+const path = require('path')
+const UPLOAD_PATH = path.resolve(__dirname, 'D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles')
 const upload = multer({
   dest: UPLOAD_PATH,
   limits: {fileSize: 10000000, files: 5}
@@ -23,7 +23,7 @@ router.get("/get/:userId", function(req, res) {
 
 
 router.get("/image",function(req,res){
-   res.sendFile("C:/Users/dlrld_000/Desktop/웹시설/팀프/webSystem/backend/uploadedFiles/5ec034737c6962b6ad74638e6d3ba4a6");
+   res.sendFile("D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles/5ec034737c6962b6ad74638e6d3ba4a6");
 });
 
 router.post("/upload",upload.array('image',5),(req,res)=>{

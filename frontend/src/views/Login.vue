@@ -11,7 +11,7 @@
         <modals-container />
         <div>
             <br />
-            <v-btn @click="signUp">signUp</v-btn>
+            <v-btn @click="signUp">Sign Up</v-btn>
         </div>
     </div>
   </div>

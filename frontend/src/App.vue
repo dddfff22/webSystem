@@ -27,7 +27,7 @@ export default {
   methods: {
     currentUserExist() {
       if(this.$session.exists('auth')) {
-        // console.log("local.auth exist")
+        console.log("session.auth exist")
         this.auth = this.$session.get('auth');
         return true;
       }

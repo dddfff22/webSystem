@@ -7,6 +7,7 @@
           <router-link :to="{name: 'search', params: {searchValue: searchValue}}" tag="button">SEARCH</router-link> | 
         </form>
         <router-link :to="{name: 'user', params: {userId: currentUser}}">MYPAGE</router-link>
+        <v-btn @click="Logout">Logout</v-btn>
       </div>
       <router-view/>
     <div class="body">
@@ -14,12 +15,10 @@
     </div>
   </div>
 </template>
-
-<script>
+ <script>
 // @ is an alias to /src
 // import Search from '@/views/Search.vue'
-
-export default {
+ export default {
   name: 'usermain',
   created() {
       this.$router.push({ name: 'mainpage'});
@@ -29,12 +28,17 @@ export default {
       searchValue: "",
       currentUser: this.$session.get("auth").displayName
     }
-  }
+  },
+  methods: {
+    Logout(){
+      this.$session.remove('auth')
+      this.$router.push({ path: '/'});
+      location.reload();
+    },
+  },
 }
 </script>
-
-
-<style>
+ <style>
 .app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,8 +47,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-
-.header {
+ .header {
   -webkit-box-align:center;
   -webkit-align-items:center;
   -ms-flex-align:center;
@@ -60,5 +63,4 @@ export default {
   position: fixed;
   background: white;
 }
-
-</style>
+ </style>

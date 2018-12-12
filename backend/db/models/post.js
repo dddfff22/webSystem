@@ -7,11 +7,12 @@ const postSchema = new mongoose.Schema({
         default: Date.now
     },
     userId: String,
-    content: String,    //contentSchema
+    content: [{imagePath:String,imageContent:String}],    //contentSchema
     like: Number,
     hashTags: [String],
     comments: [{userName: String, message: String}]
 })
+
 
 // // doctorId를 Auto Increment 필드로 지정
 // doctorSchema.plugin(autoIncrement, {

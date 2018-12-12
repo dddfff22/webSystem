@@ -48,7 +48,7 @@ export default {
             this.$router.push({ name: "usermain" })
             // console.log(this.$session.get('auth'))
             // console.log(firebase.auth().currentUser.providerData)
-            // console.log("log in successed")
+            console.log("log in successed")
             location.reload();
           },
           (err)=> {

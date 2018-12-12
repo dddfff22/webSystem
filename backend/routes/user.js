@@ -26,6 +26,21 @@ router.get("/:userId/posts", function(req, res) {
      });
 });
 
+//saveUserInfo
+router.post("/save", function(req, res) {
+    console.log(":8000/user/save");
+    var newUserInfo = req.body.newUserInfo;
+
+    userModel.findOne({"userEmail": newUserInfo.userEmail}, function(err, user) {
+        console.log(user);
+        user.userId = newUserInfo.userId;
+        user.userName = newUserInfo.userName;
+        user.description = newUserInfo.description;
+        user.save();
+        res.end();
+    });
+});
+
 //checkFollowing
 router.get("/:userId/follow", function(req, res) {
     console.log(":8000/user/:userId/follow");

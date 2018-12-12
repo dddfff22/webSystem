@@ -1,14 +1,22 @@
 <template>
-    <div>
+    <div id="userPage">
         <div id="userInfo">
-            <div id="profileImg"></div>
-            <section id="profile">
+            <div id="profileImg">
+                <img alt="no image" src="../assets/default-image.jpg">
+            </div>
+            <div id="profile">
                 <div>
                     <h1 id="userId">{{this.userInfo.userId}}</h1>
                     {{this.checkFollowing()}}
-                    <button v-if="this.userId == 'aaa'" >프로필 편집</button>    <!--loginedUserId-->
-                    <button v-else-if="this.isFollowing" v-on:click="undoFollow">팔로우 취소</button>
-                    <button v-else v-on:click="doFollow">팔로우</button>
+                    <span v-if="this.userId == this.currentUser">
+                        <router-link :to="{name: 'edit', params: {userId: this.userId}}" tag="button">프로필 편집</router-link>
+                    </span>
+                    <span v-else-if="this.isFollowing"><button v-on:click="undoFollow">팔로우 취소</button></span>
+                    <span v-else v-on:click="doFollow"><button>팔로우</button></span>
+
+                    <!-- <router-link v-if="this.userId == this.currentUser" tag="button">프로필 편집</button>    loginedUserId -->
+                    <!-- <button v-else-if="this.isFollowing" v-on:click="undoFollow">팔로우 취소</button> -->
+                    <!-- <button v-else v-on:click="doFollow">팔로우</button> -->
                 </div>
                 <ul>
                     <li><span>게시물 <span class="listNum">{{this.userPosts.length}}</span></span></li>
@@ -20,7 +28,7 @@
                     <br>
                     <span>{{this.userInfo.description}}</span>
                 </div>
-            </section>
+            </div>
             <!-- {{this.userInfo}} -->
             <!-- <button v-on:click="doFollow">FOLLOW</button> -->
         </div>
@@ -37,6 +45,7 @@ export default {
     name: "userpage",
     data() {
         return {
+            currentUser: this.$session.get("auth").displayName,
             userId: this.$route.params.userId,
             userInfo: "",
             userPosts: Array,
@@ -79,7 +88,7 @@ export default {
 
         checkFollowing: function() {
             console.log("checkFollowing");
-                this.$http.get('http://localhost:8000/user/' + "aaa" + '/follow')   //loginedUserId
+                this.$http.get('http://localhost:8000/user/' + this.currentUser + '/follow')   //loginedUserId
                 .then((result) => {
                     console.log(result.data[0]);
                     console.log(result.data[0].following.includes(this.userId));
@@ -95,7 +104,7 @@ export default {
         doFollow: function() {
             console.log("doFollow");
             this.$http.post('http://localhost:8000/user/follow', {
-                follow: "aaa",  //loginedUserId
+                follow: this.currentUser,  //loginedUserId
                 beFollowed: this.userId
             })
             .then((result) => {
@@ -106,7 +115,7 @@ export default {
         undoFollow: function() {
             console.log("undoFollow");
             this.$http.post('http://localhost:8000/user/unFollow', {
-                follow: "aaa",  //loginedUserId
+                follow: this.currentUser,  //loginedUserId
                 beFollowed: this.userId
             })
             .then((result) => {
@@ -118,8 +127,24 @@ export default {
 </script>
 
 <style>
+#userPage {
+    margin: 50px 150px;
+    padding: 10px
+}
+
 #userInfo {
     margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+}
+
+#profileImg {
+    grid-column: 1 / 2;
+}
+
+#profile {
+    grid-column: 2 / 4;
 }
 
 h1 {
@@ -138,8 +163,7 @@ ul li {
 }
 
 hr {
-    width: 80%;
-
+    width: 100%;
     color: gray    
 }
 

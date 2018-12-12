@@ -10,6 +10,7 @@
   "dependencies": {
     "@websanova/vue-upload": "^1.2.5-beta",
     "axios": "^0.18.0",
+    "mongoose-auto-increment": "^5.0.1",
     "firebase": "^5.7.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",

@@ -4,8 +4,8 @@
         <div>
             <img alt="no image" src="../assets/default-image.jpg">
             <br>
-            <input type="file">
-            <button>프로필 사진 변경</button>
+            <input type="file" @change="onFileChanged">
+            <button @click="onUpload">프로필 사진 변경</button>
         </div>
         <div>
             사용자 계정 <input type="text" name="userId" v-model="userInfo.userId">
@@ -36,7 +36,8 @@ export default {
                 userId: String,
                 userName: String,
                 description: String
-            }
+            },
+            selectedFile: ""
         }
     },
     created() {
@@ -73,6 +74,14 @@ export default {
                 this.$sessionStorage.set('auth', firebase.auth().currentUser);
                 alert("저장 완료");
             });
+        },
+
+        onFileChanged: function(event) {
+            this.selectedFile = event.target.files[0]
+        },
+        
+        onUpload: function() {
+    // upload file, get it from this.selectedFile
         }
     }
 }

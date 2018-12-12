@@ -26,12 +26,13 @@ export default {
   },
   methods: {
     currentUserExist() {
-      if(this.$session.exists('auth')) {
-        console.log("session.auth exist")
-        this.auth = this.$session.get('auth');
+      if(this.$localStorage.get('auth')) {
+        console.log("localStorage.auth exist")
+        this.auth = this.$localStorage.get('auth');
         return true;
       }
       else {
+        this.$router.push({ path: '/'});
         return false;
       }
     }

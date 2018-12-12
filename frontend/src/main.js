@@ -4,13 +4,15 @@ import router from './router'
 import axios from 'axios'
 import firebase from 'firebase'
 import Vuetifiy from 'vuetify'
-import VueSessionStorage from 'vue-sessionstorage'
+// import VueSessionStorage from 'vue-sessionstorage'
+import VueLocalStorage from 'vue-localstorage'
 import VModal from 'vue-js-modal'
 
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 Vue.use(Vuetifiy)
-Vue.use(VueSessionStorage)
+Vue.use(VueLocalStorage)
+// Vue.use(VueSessionStorage)
 Vue.use(VModal, { dynamic: true })
 
 var config = {

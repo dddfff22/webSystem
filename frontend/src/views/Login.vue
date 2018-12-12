@@ -1,8 +1,7 @@
 <template>
   <div class="login">
     <div v-bind:style="{display: displaylogin}">
-        <h3>LogIn</h3>
-            <img alt="Vue logo" src="../assets/logo.png">
+            <img alt="Vue logo" src="../assets/Tstagram_logo.png">
         <v-form>
         <v-text-field type="text" v-model="input.email" placeholder="Email"></v-text-field>
         <v-text-field type="password" v-model="input.password" placeholder="Password"></v-text-field>
@@ -44,12 +43,9 @@ export default {
         .signInWithEmailAndPassword(this.input.email, this.input.password)
         .then(
           (user) => {
-            this.$session.set('auth', firebase.auth().currentUser);
+            this.$localStorage.set('auth', JSON.stringify(firebase.auth().currentUser));
             this.$router.push({ name: "usermain" })
-            // console.log(this.$session.get('auth'))
-            // console.log(firebase.auth().currentUser.providerData)
-            console.log("log in successed")
-            location.reload();
+            location.reload()
           },
           (err)=> {
             alert(err.message)

@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       searchValue: "",
-      currentUser: "shy625"
+      currentUser: this.$session.get("auth").displayName
     }
   }
 }

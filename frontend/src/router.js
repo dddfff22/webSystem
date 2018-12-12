@@ -42,6 +42,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "post" */ './views/UserPage.vue')
     },
     {
+      path: '/hashtag/:tagValue',
+      name: 'hashtag',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "post" */ './views/HashTagPage.vue')
+    },
+    {
       path: '/search/:searchValue',
       name: 'search',
       // route level code-splitting
@@ -49,5 +57,13 @@ export default new Router({
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "post" */ './views/Search.vue')
     },
+    {
+      path: '/edit/:userId',
+      name: 'edit',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "post" */ './views/EditPage.vue')
+    }
   ]
 })

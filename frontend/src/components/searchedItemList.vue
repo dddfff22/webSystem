@@ -10,7 +10,7 @@
         <div>
             <div v-for="i in searchedTagList" v-bind:key="i._id">
                 <br>
-                #{{i.hashTag}}
+                <router-link :to="{name: 'hashtag', params: {tagValue: i.hashTag}}">#{{i.hashTag}}</router-link>
             </div>
         </div>
         <!-- {{this.logging()}} -->

@@ -7,6 +7,7 @@ const user = require('./routes/user')
 const search = require('./routes/search')
 const mainpage = require('./routes/mainpage')
 const signUp = require('./routes/signUp')
+const hashTag = require('./routes/hashTag')
 
 const app = express()
 app.use((req, res, next) =>{
@@ -22,6 +23,7 @@ app.use('/search', search)
 app.use('/user', user)
 app.use('/mainpage',mainpage)
 app.use('/signup',signUp)
+app.use('/hashtag', hashTag)
 
 
 module.exports = app

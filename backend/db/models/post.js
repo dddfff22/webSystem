@@ -9,8 +9,8 @@ const postSchema = new mongoose.Schema({
     userId: String,
     content: String,    //contentSchema
     like: Number,
-    hashTag: [String],
-    comment: [{userName: String, message: String}]
+    hashTags: [String],
+    comments: [{userName: String, message: String}]
 })
 
 // // doctorId를 Auto Increment 필드로 지정

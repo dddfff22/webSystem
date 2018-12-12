@@ -1,14 +1,17 @@
 <template>
   <div class="mainpage"> 
+        
       <button @click="addNewPost">새로운 게시글 추가하기</button>
       <div v-for= "searchResultwithUserId in searchResultwithUserIds">
-      <main-body :id="searchResultwithUserId.userId"  :link="img" :contents="searchResultwithUserId.content" :objectId="searchResultwithUserId._id"/>
+      <main-body :id="searchResultwithUserId.userId"  :link="img" :contents="searchResultwithUserId.content" :objectId="searchResultwithUserId._id" :comments="searchResultwithUserId.comments" :userName="searchResultwithUserId.userName" :likeUser="searchResultwithUserId.likeUser"/>
       </div>
+  
   </div>
 </template>
 
 <script>
 import MainBody from '@/components/MainBody.vue'
+import signUp from './SignUp.vue'
 export default {
   name: 'mainpage',
   components: {
@@ -16,7 +19,7 @@ export default {
   },
   data(){
     return{
-      userId : "dddfff22",
+      userId : this.$session.get("auth").displayName,
       searchResultwithUserIds: [],
       loading:'1',
       img: "/img/logo.82b9c7a5.png",
@@ -34,9 +37,9 @@ export default {
      console.log('posts');
     let data = new FormData()
     data.append('image', e.target.files[0])
-    this.userId=this.searchResultwithUserIds[0].userId;
+    this.userId=this.$session.get("auth").displayName;
     console.log(e.target.files[0]);
-    this.$http.post('http://localhost:8000/mainpage/upload', data)
+    this.$http.post('http://localhost:8000/mainpage/upload/', data)
         .then(resp => {
          this.imagePath = resp.data.path
    });
@@ -44,12 +47,13 @@ export default {
   addNewPost(){
     console.log("add");
     console.log(this.userId);
-      this.$http.get('http://localhost:8000/mainpage/addNewpost'+this.userId)
+      this.$http.get('http://localhost:8000/mainpage/addNewpost/'+this.userId)
         .then(resp => {
          cosole.log(posts);
    });
   }
   }
+  
 }
 </script>
 
@@ -58,8 +62,10 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: center; 
   color: #2c3e50;
   margin-top: 60px;
+
+
 }
 </style>

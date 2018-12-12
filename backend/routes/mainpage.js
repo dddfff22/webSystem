@@ -28,22 +28,38 @@ router.get("/get/:userId", function(req, res) {
         console.log(posts);
         res.send(posts);
      });
-}); 
+});
 
 
+router.get("/addNewpost:userId", function(req,res){
+    var userId = req.params.userId;
+    postModel.find({"userId": userId },function(err, posts) {
+
+        console.log("newpost");
+        var post= new postModel();
+        post.userName=posts[0].userName;
+        post.userId=posts[0].userId
+        post.save();
+        console.log(post);
+        res.send(post);
+
+     });
+});   
+
+
+ 
 router.get("/image/:imagename",function(req,res){
    console.log(req);
    res.sendFile("C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles/"+req.params.imagename);
 });   
 
 router.post("/upload:objectID",upload.array('image',5),(req,res)=>{
-  var objectID=req.params.objectID;
-  console.log(objectID);
-  
-   postModel.findOne({"_id": objectID}, function(err, post) {
+    var str=req.params.objectID.split('-');
+  console.log(str);
+
+   postModel.findOne({"_id": str[0]}, function(err, post) {
       console.log("1");
-      post.content.push({imagePath:"http://localhost:8000/mainpage/image/"+req.files[0].filename,imageContent:"dd"});
-   
+      post.content.push({imagePath:"http://localhost:8000/mainpage/image/"+req.files[0].filename,imageContent:str[1]});
       console.log(post);
       post.save();
       });

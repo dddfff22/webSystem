@@ -1,13 +1,15 @@
 <template>
   <div class="main-body">
   <div class="idbox">
-      <input type="file" id="wizard-picture"  @change="change($event)">
-      <button @click="handleSubmit">제출</button>
     <h1>{{id}}</h1>
   </div>
+    <input type="file" id="wizard-picture"  @change="change($event)">
+    <input type="text" v-model="message">
+    <button @click="handleSubmit">제출</button>
   <h1>{{objectId}}</h1>
   <div v-for= "content in contents" class="image">
     <img v-bind:src="content.imagePath"/>
+    <h1>{{content.imageContent}}</h1>
   </div>
 
   <div class="content">
@@ -16,6 +18,7 @@
   </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -30,7 +33,9 @@ export default {
   },
   data(){
     return{
-      file:""
+      file:"",
+      message:"",
+      split:"-"
     }
   },
   methods: {
@@ -41,7 +46,7 @@ export default {
      console.log(this.file);
     let data = new FormData()
     data.append('image', this.file)
-    this.$http.post('http://localhost:8000/mainpage/upload'+this.objectId , data)
+    this.$http.post('http://localhost:8000/mainpage/upload'+this.objectId+this.split+this.message, data)
         .then(resp => {
          this.imagePath = resp.data.path
    });
@@ -69,5 +74,8 @@ export default {
   border:2px solid gray;
   margin-top:10px
 }
-
+.image{
+   border:2px solid gray;
+  margin-top:10px
+}
 </style>

@@ -46,7 +46,7 @@ export default {
      console.log(this.file);
     let data = new FormData()
     data.append('image', this.file)
-    this.$http.post('http://localhost:8000/mainpage/upload'+this.objectId+this.split+this.message, data)
+    this.$http.post('http://localhost:8000/mainpage/upload/'+this.objectId+this.split+this.message, data)
         .then(resp => {
          this.imagePath = resp.data.path
    });

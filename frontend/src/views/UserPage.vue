@@ -91,13 +91,12 @@ export default {
                 this.$http.get('http://localhost:8000/user/' + this.currentUser + '/follow')   //loginedUserId
                 .then((result) => {
                     console.log(result.data[0]);
-                    console.log(result.data[0].following.includes("shy625"));
-                    if(result.data[0].following.includes("shy625")) {
+                    console.log(result.data[0].following.includes(this.userId));
+                    if(result.data[0].following.includes(this.userId)) {
                         this.isFollowing = true;
                     } else {
                         this.isFollowing = false;
                     }
-                    // return result.data[0].following.includes("shy625");
                 });
         },
 

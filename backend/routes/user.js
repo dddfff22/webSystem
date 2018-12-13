@@ -1,7 +1,21 @@
 const { Router } = require('Express')
 const userModel = require('../db/models/user');
 const postModel = require('../db/models/post');
+const multer = require('multer');
+const path = require('path');
 
+const UPLOAD_PATH = path.resolve(__dirname, 'D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles/profileImgs');
+
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, UPLOAD_PATH)
+    },
+    limits: {fileSize: 10 * 1024 * 1024},
+    filename: function (req, file, cb) {
+        cb(null, new Date().valueOf() + path.extname(file.originalname));
+    }
+})
+var upload = multer({ storage: storage });
 
 const router = Router()
 //getUserInfo
@@ -40,6 +54,39 @@ router.post("/save", function(req, res) {
         res.end();
     });
 });
+
+//onUpload
+router.post("/upload/:userEmail", upload.single('image'), function(req, res) {
+    console.log(":8000/user/upload");
+    var userEmail = req.params.userEmail;
+    console.log(userEmail);
+
+    userModel.findOne({"userEmail": userEmail}, function(err, user) {
+        console.log(user);
+        console.log(req.file);
+        user.profileImg = req.file.filename;
+        user.save();
+        res.end();
+     });
+});
+
+//getProfileImgPath
+router.get("/image/:userId",function(req,res) {
+    console.log(":8000/user/image/:userId");
+    var userId = req.params.userId;
+
+    userModel.findOne({"userId": userId}, function(err, user) {
+        console.log(user);
+        res.sendFile("D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles/profileImgs/" + user.profileImg);
+    }).select("profileImg");
+ });
+
+//getDefaultImg
+router.get("/image",function(req,res) {
+    console.log(":8000/user/image");
+
+    res.sendFile("D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/frontend/src/assets/default-image.jpg");
+ });
 
 //checkFollowing
 router.get("/:userId/follow", function(req, res) {

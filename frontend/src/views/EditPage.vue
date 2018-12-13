@@ -2,7 +2,8 @@
     <div id="editPage">
         <h1>{{this.userInfo.userId}}</h1>
         <div>
-            <img alt="no image" src="../assets/default-image.jpg">
+            {{this.profileImg}}
+            <img alt="no image" v-bind:src="profileImgSrc">
             <br>
             <input type="file" @change="onFileChanged">
             <button @click="onUpload">프로필 사진 변경</button>
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase,{ functions } from 'firebase'
 
 export default {
     name: "editPage",
@@ -37,11 +38,13 @@ export default {
                 userName: String,
                 description: String
             },
-            selectedFile: ""
+            selectedFile: "",
+            profileImgSrc: ""
         }
     },
     created() {
         this.setUserId();
+        this.getProfileImgPath();
     },
     methods: {
         setUserId: function() {
@@ -72,16 +75,44 @@ export default {
                 firebase.auth().currentUser.updateProfile({displayName: this.userInfo.userId});
                 this.$localStorage.remove('auth');
                 this.$sessionStorage.set('auth', firebase.auth().currentUser);
-                alert("저장 완료");
             });
+            alert("저장 완료");
+
         },
 
         onFileChanged: function(event) {
-            this.selectedFile = event.target.files[0]
+            console.log("onFileChanged");
+            this.selectedFile = event.target.files[0];
+            console.log(this.selectedFile);
         },
         
         onUpload: function() {
-    // upload file, get it from this.selectedFile
+            console.log("onUpload");
+            var data = new FormData();
+            data.append('image', this.selectedFile);
+            console.log(data);
+            this.$http.post('http://localhost:8000/user/upload/' + this.userInfo.userEmail, data)
+            .then(result => {
+                this.getProfileImgPath();
+            });
+        },
+        
+        getProfileImgPath: function() {
+            console.log("getProfileImgPath");
+            this.$http.get('http://localhost:8000/user/' + this.userId)
+            .then((result) => {
+                var profileImgName = result.data.profileImg;
+                console.log(profileImgName);
+                if(profileImgName == undefined) {
+                    console.log("no image");
+                    this.profileImgSrc = "http://localhost:8000/user/image";
+                } else {
+                    this.profileImgSrc = "http://localhost:8000/user/image/" + this.userId;
+                }
+                // if(result.data > 0) {
+                    // this.profileImgSrc = "http://localhost:8000/user/image/" + this.userId;
+                // }
+            });
         }
     }
 }

@@ -36,7 +36,7 @@ export default {
     data.append('image', e.target.files[0])
     this.userId=this.searchResultwithUserIds[0].userId;
     console.log(e.target.files[0]);
-    this.$http.post('http://localhost:8000/mainpage/upload', data)
+    this.$http.post('http://localhost:8000/mainpage/upload/', data)
         .then(resp => {
          this.imagePath = resp.data.path
    });
@@ -44,7 +44,7 @@ export default {
   addNewPost(){
     console.log("add");
     console.log(this.userId);
-      this.$http.get('http://localhost:8000/mainpage/addNewpost'+this.userId)
+      this.$http.get('http://localhost:8000/mainpage/addNewpost/'+this.userId)
         .then(resp => {
          cosole.log(posts);
    });

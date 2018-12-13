@@ -4,7 +4,7 @@ const postModel = require('../db/models/post');
 const Image = require('../db/models//Image');
 const multer = require('multer')
 const path = require('path')
-const UPLOAD_PATH = path.resolve(__dirname, 'C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles')
+const UPLOAD_PATH = path.resolve(__dirname, 'D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles')
 
 var storage = multer.diskStorage({
    destination: function (req, file, cb) {
@@ -31,7 +31,7 @@ router.get("/get/:userId", function(req, res) {
 });
 
 
-router.get("/addNewpost:userId", function(req,res){
+router.get("/addNewpost/:userId", function(req,res){
     var userId = req.params.userId;
     postModel.find({"userId": userId },function(err, posts) {
 
@@ -50,10 +50,10 @@ router.get("/addNewpost:userId", function(req,res){
  
 router.get("/image/:imagename",function(req,res){
    console.log(req);
-   res.sendFile("C:/Users/dddff/tstagram/webSystem/backend/uploadedFiles/"+req.params.imagename);
+   res.sendFile("D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles/"+req.params.imagename);
 });   
 
-router.post("/upload:objectID",upload.array('image',5),(req,res)=>{
+router.post("/upload/:objectID",upload.array('image',5),(req,res)=>{
     var str=req.params.objectID.split('-');
   console.log(str);
 

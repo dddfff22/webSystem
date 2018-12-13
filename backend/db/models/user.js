@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     },
     // password: String, firebase에서 관리
     userName: String,
+    profileImg: String,
     description: String,
     following: [String],
     follower: [String]

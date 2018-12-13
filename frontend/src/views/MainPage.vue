@@ -11,7 +11,7 @@
 
 <script>
 import MainBody from '@/components/MainBody.vue'
-import signUp from './SignUp.vue'
+
 export default {
   name: 'mainpage',
   components: {
@@ -19,15 +19,17 @@ export default {
   },
   data(){
     return{
-      userId : this.$session.get("auth").displayName,
+      userId : "dddfff22",
       searchResultwithUserIds: [],
       loading:'1',
       img: "/img/logo.82b9c7a5.png",
       selectedFile: null
     }
     },created() {     
+      let auth = JSON.parse(this.$localStorage.get('auth'))
+    
          console.log("search");
-     this.$http.get('http://localhost:8000/mainpage/get/'+this.userId)
+         this.$http.get('http://localhost:8000/mainpage/get/'+ auth.displayName)
     .then((result) => {
         this.searchResultwithUserIds = result.data;
         console.log(this.searchResultwithUserIds);

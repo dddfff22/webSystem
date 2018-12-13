@@ -52,8 +52,10 @@ export default {
     contentList
   },
   created(){
+    let auth = JSON.parse(this.$localStorage.get('auth'))
+    userName= auth.displayName;
     for(var i=0;i<likeUser.length;i++){
-        if(this.likeUser[i].userId== this.userId){
+        if(this.likeUser[i].userId== this.auth.displayName){
           this.favorite=true;
         }
     }
@@ -63,7 +65,7 @@ export default {
       message:"",
       split:"-",
       userInput:"",
-      userName:String,
+      userName: auth.displayName,
       favorite:false
     }
   },

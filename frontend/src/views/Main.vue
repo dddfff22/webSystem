@@ -35,7 +35,7 @@
   data() {
     return {
       searchValue: "",
-      currentUser: this.$session.get("auth").displayName
+      currentUser: JSON.parse(this.$localStorage.get('auth')).displayName
     }
   },
   methods: {

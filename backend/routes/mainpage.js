@@ -26,8 +26,9 @@ router.get("/get/:userId", function(req, res) {
 
     var userId = req.params.userId;
     var ans=[];
-
+    console.log(req.params.userId);
      userModel.find({"userId": userId },function(err, user) {
+         console.log(user);
         console.log(user[0].following);
         user[0].following.push(req.params.userId);
         postModel.find({'userId':{"$in" : user[0].following}}).sort({postId: 'descending'}).exec(function(err, posts) {      
@@ -76,7 +77,7 @@ router.post("/upload/:objectID",upload.array('image',5),(req,res)=>{
 router.post("/comentUpload",(req,res)=>{
     console.log(req.body.comment);
     console.log(req.body.objectID);
-   postModel.findOne({"_id": req.body.objectId}, function(err, post) {
+     postModel.findOne({"_id": req.body.objectId}, function(err, post) {
       console.log("1");
       post.comments.push({userName: req.body.userName, message: req.body.comment});
       console.log(post);

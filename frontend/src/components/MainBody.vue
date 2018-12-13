@@ -11,7 +11,7 @@
     <input type="text" v-model="message">
     <button @click="handleSubmit">제출</button>
   <div v-for= "content in contents" class="image">
-    <img style='height: 100%; width: 100%; object-fit: contain' v-bind:src="content.imagePath"/>
+    <img id="contentImg" v-bind:src="content.imagePath"/>
     <h1>{{content.imageContent}}</h1>
   </div>
 
@@ -136,8 +136,15 @@ export default {
 }
 .main-body{
   border:2px solid gray;
- margin:10px
+  margin:50px 200px;
 }
+
+#contentImg {
+  max-width: 614px;
+  max-height: 614px;
+  margin: 20px;
+}
+
 .image{
    border:2px solid gray;
   margin:10px

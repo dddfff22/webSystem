@@ -1,7 +1,6 @@
 const { Router } = require('Express')
 const userModel = require('../db/models/user');
 const postModel = require('../db/models/post');
-const Image = require('../db/models//Image');
 const multer = require('multer')
 const path = require('path')
 const UPLOAD_PATH = path.resolve(__dirname, 'D:/SHY/Documents/Backup/4-2/웹시설/팀프/project/webSystem/backend/uploadedFiles')
@@ -18,34 +17,55 @@ var storage = multer.diskStorage({
        cb(null, Date.now() + ext)
    }
 })
+
 var upload = multer({ storage: storage });
+
 const router = Router()
 
 router.get("/get/:userId", function(req, res) {
-    console.log(req.url);
-    var userId = req.params.userId;
-     postModel.find({"userId": userId },function(err, posts) {
-        console.log(posts);
-        res.send(posts);
-     });
-});
 
+    var userId = req.params.userId;
+    var ans=[];
+    console.log(req.params.userId);
+     userModel.find({"userId": userId },function(err, user) {
+         console.log(user);
+         if(user.length==0){
+            postModel.find({'userId':userId}).sort({postId: 'descending'}).exec(function(err, posts) {      
+                console.log("11");
+                ans.push.apply(ans, posts);
+            console.log(ans);
+            res.send(ans);
+            });
+         }else{
+        console.log(user[0].following);
+        user[0].following.push(req.params.userId);
+        postModel.find({'userId':{"$in" : user[0].following}}).sort({postId: 'descending'}).exec(function(err, posts) {      
+            console.log("11");
+            ans.push.apply(ans, posts);
+        console.log(ans);
+        res.send(ans);
+        });
+    }
+      
+    });
+
+});   
 
 router.get("/addNewpost/:userId", function(req,res){
     var userId = req.params.userId;
-    postModel.find({"userId": userId },function(err, posts) {
-
+    console.log(userId);
+    userModel.find({"userId": userId },function(err, user) {
         console.log("newpost");
+        console.log(user);
         var post= new postModel();
-        post.userName=posts[0].userName;
-        post.userId=posts[0].userId
+        post.userName=user[0].userName;
+        post.userId=user[0].userId
         post.save();
         console.log(post);
         res.send(post);
-
      });
-});   
 
+});   
 
  
 router.get("/image/:imagename",function(req,res){
@@ -55,14 +75,36 @@ router.get("/image/:imagename",function(req,res){
 
 router.post("/upload/:objectID",upload.array('image',5),(req,res)=>{
     var str=req.params.objectID.split('-');
-  console.log(str);
-
-   postModel.findOne({"_id": str[0]}, function(err, post) {
+  console.log(str[0]);
+   postModel.findOne({"_id":str[0]}, function(err, post) {
+        console.log(post);
       console.log("1");
       post.content.push({imagePath:"http://localhost:8000/mainpage/image/"+req.files[0].filename,imageContent:str[1]});
       console.log(post);
       post.save();
       });
+});
+router.post("/comentUpload",(req,res)=>{
+    console.log(req.body.comment);
+    console.log(req.body.userName);
+    userId=
+     postModel.findOne({"_id": req.body.objectId}, function(err, post) {
+      console.log("1");
+      post.comments.push({userName:req.body.userName, message: req.body.comment});
+      console.log(post);
+      post.save();
+      });
+});
+
+router.post("/upFavorite",(req,res)=>{
+    console.log(req.body.comment);
+    console.log(req.body.objectId);
+    postModel.findOne({"_id": req.body.objectId}, function(err, post) {
+      console.log("1");
+      post.comments.push({userName: req.body.userName, message: req.body.comment});
+      console.log(post);
+      post.save();
+    });
 });
 
 

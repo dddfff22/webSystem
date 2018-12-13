@@ -1,26 +1,42 @@
 <template>
+
   <div class="main-body">
   <div class="idbox">
     <h1>{{id}}</h1>
+      <modals-container />
+      
+
   </div>
     <input type="file" id="wizard-picture"  @change="change($event)">
     <input type="text" v-model="message">
     <button @click="handleSubmit">제출</button>
-  <h1>{{objectId}}</h1>
   <div v-for= "content in contents" class="image">
-    <img v-bind:src="content.imagePath"/>
+    <img style='height: 100%; width: 100%; object-fit: contain' v-bind:src="content.imagePath"/>
     <h1>{{content.imageContent}}</h1>
   </div>
 
-  <div class="content">
-    <div v-for= "content in contents">
+  <span v-show="this.favorite">
+    <button @click="click()"><img src="../assets/redheart.png"/></button>
+  </span>
+  <span v-show="this.favorite==false"> <button @click="click()"><img src="../assets/emptyheart.png"/></button></span>
+
+  <div class="etc">
+    <div class="comentList" v-for="comment in comments">
+        <h1>{{comment.userName}} : {{comment.message}}</h1>
     </div>
+    <div class="inputComment">
+      <input type="text" v-model="userInput">
+       <button @click="commetSubmit">제출</button>
+    </div>
+    
   </div>
   </div>
 </template>
 
 
 <script>
+
+import contentList from './contentList.vue'
 export default {
   name: 'MainBody',
   props: {
@@ -28,14 +44,29 @@ export default {
     id:String,
     link:String,
     contents:[],
+    comments:[],
     objectId:String,
     hashTags:[],
+    likeUser:[]
+  },  components: {
+    contentList
   },
-  data(){
+  created(){
+    let auth = JSON.parse(this.$localStorage.get('auth'))
+    userName= auth.displayName;
+    for(var i=0;i<likeUser.length;i++){
+        if(this.likeUser[i].userId== this.auth.displayName){
+          this.favorite=true;
+        }
+    }
+  }, data(){
     return{
       file:"",
       message:"",
-      split:"-"
+      split:"-",
+      userInput:"",
+      userName: auth.displayName,
+      favorite:false
     }
   },
   methods: {
@@ -46,14 +77,47 @@ export default {
      console.log(this.file);
     let data = new FormData()
     data.append('image', this.file)
-    this.$http.post('http://localhost:8000/mainpage/upload/'+this.objectId+this.split+this.message, data)
+    this.$http.post('http://localhost:8000/mainpage/upload/'+this.objectId+"-"+this.message, data)
         .then(resp => {
-         this.imagePath = resp.data.path
    });
-  },postEventData() {
+  },commetSubmit () {
+     console.log(JSON.parse(this.$localStorage.get('auth')).displayName);
+    let data = new FormData()
+    data.append('image', this.file)
+    this.$http.post('http://localhost:8000/mainpage/comentUpload/',{
+          comment:this.userInput,
+          objectId:this.objectId,
+          userName:JSON.parse(this.$localStorage.get('auth')).displayName
+    });
+  }, postEventData() {
             console.log('11');
-      }
-  }
+      },
+      click(){
+                    console.log("click");
+                    if(this.favorite==true){ 
+                      this.favorite=false;                   
+                    }else{
+                        this.favorite=true;
+                    }
+                },addFavorite(){
+      console.log("favorite");
+      
+  },contenstUp(){
+      console.log('1');
+      this.$modal.show(contentList,{
+        hot_table : 'data',
+        modal : this.$modal },{
+        name: 'dynamic-modal',
+        width : '656',
+        height : '340',
+        draggable: false,
+       
+            })
+        // this.displaylogin = 'none'
+        // this.displaysignUp = 'block'
+    }
+  
+    }
 }
 
 </script>
@@ -72,10 +136,10 @@ export default {
 }
 .main-body{
   border:2px solid gray;
-  margin-top:10px
+ margin:10px
 }
 .image{
    border:2px solid gray;
-  margin-top:10px
+  margin:10px
 }
 </style>

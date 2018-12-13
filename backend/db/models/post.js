@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema({
     userId: String,
     content: [{imagePath:String,imageContent:String}],    //contentSchema
     like: Number,
+    likeUser:[{userId:String,userName:String}],
     hashTags: [String],
     comments: [{userName: String, message: String}]
 })

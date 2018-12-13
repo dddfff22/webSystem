@@ -45,15 +45,17 @@ export default {
     name: "userpage",
     data() {
         return {
-            currentUser: this.$session.get("auth").displayName,
+            currentUser: JSON.parse(this.$localStorage.get('auth')).displayName,
             userId: this.$route.params.userId,
             userInfo: "",
             userPosts: Array,
-            isFollowing: Boolean
+            isFollowing: Boolean,
+        
         }
     },
     created() {
         this.setUserId();
+
         // this.getUserInfo();
         // this.getUserPosts();
     },
